@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>My Valentine</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffe6ee;
+      color: #eb2880;
+    }
+
+    main {
+      text-align: center;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+    }
+
+    img {
+      width: 480px;
+      max-width: 90%;
+      height: auto;
+      border-radius: 2rem;
+      opacity: 0.9;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    button {
+      font-size: 1.5rem;
+      padding: 0.5rem 2rem;
+      border: none;
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #btn-yes {
+      background: #ff7aa2;
+      color: white;
+    }
+
+    #btn-no {
+      background: #ffd1dc;
+    }
+  </style>
+</head>
+
+<body>
+  <main
+    id="main"
+    data-rejection-text="No,You sure?,Really sure?,Positive??,Pwetty pwease?,Think about it?,If you say no I'll be sad T_T,So sad...,So so so sad...,Ok fine I'll stop asking,Just kidding PLEASE SAY YES,You break my heart..."
+  >
+    <!-- INITIAL -->
+    <section id="header-initial">
+      <img src="valentine.png" alt="Will you be my valentine" />
+    </section>
+
+    <!-- YES -->
+    <section id="header-yes" class="hidden">
+      <img src="thanks.png" alt="Thanks love" />
+    </section>
+
+    <!-- BUTTONS -->
+    <section id="button-group">
+      <button id="btn-yes">I Love You Toooo</button>
+      <button id="btn-no">No</button>
+    </section>
+  </main>
+
+  <script>
+    const main = document.getElementById("main");
+    const initial = document.getElementById("header-initial");
+    const yesHeader = document.getElementById("header-yes");
+    const buttons = document.getElementById("button-group");
+    const yesBtn = document.getElementById("btn-yes");
+    const noBtn = document.getElementById("btn-no");
+
+    let count = 0;
+    const texts = main.dataset.rejectionText.split(",");
+
+    // YES button click: show image only, hide buttons permanently
+    yesBtn.onclick = () => {
+      initial.classList.add("hidden");
+      yesHeader.classList.remove("hidden");
+      buttons.style.display = "none"; // permanently hide buttons
+      count = 0;
+    };
+
+    // NO button click: change text and grow YES button
+    noBtn.onclick = () => {
+      count++;
+      noBtn.textContent = texts[count % texts.length];
+      yesBtn.style.padding = `${1 + count * 0.2}rem ${1 + count * 0.4}rem`;
+      yesBtn.style.fontSize = `${1.5 + count * 0.2}rem`;
+    };
+  </script>
+</body>
+</html>
